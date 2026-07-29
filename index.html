@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA // Bio Link</title>
+    <meta name="description" content="Aesthetic biolink profile inspired by guns.lol and feds.lol featuring custom audio player, neon glow themes, particle canvas backgrounds, and live customization studio.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- CRT Scanlines Overlay -->
+    <div id="scanlines-overlay" class="scanlines-overlay"></div>
+
+    <!-- Custom Wallpaper Image Overlay -->
+    <div id="custom-bg-overlay"></div>
+
+    <!-- Background Particle Canvas & Cursor Canvas -->
+    <canvas id="bg-canvas"></canvas>
+    <canvas id="cursor-canvas"></canvas>
+
+    <!-- Click to Enter Overlay -->
+    <div id="enter-overlay">
+        <div class="enter-content">
+            <h1 class="enter-title">CLICK ANYWHERE TO ENTER</h1>
+            <p class="enter-subtitle">
+                <span class="pulse-dot"></span> AUDIO & VISUAL EXPERIENCES READY
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Bio Application -->
+    <main id="app-container">
+        <!-- Main Public Bio Card -->
+        <article class="bio-card">
+            
+            <!-- Profile Header -->
+            <header class="profile-header">
+                <div class="avatar-wrapper">
+                    <img id="avatar-img" class="avatar-img" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400&auto=format&fit=crop&q=80" alt="Profile Avatar">
+                    <span class="status-dot dnd" id="status-dot"></span>
+                </div>
+
+                <div class="profile-name-group">
+                    <h1 class="display-name">
+                        <span id="display-name-text">AURA ⚡</span>
+                        <span id="verified-icon" class="verified-icon" title="Verified Account">✓</span>
+                    </h1>
+                    <span id="profile-handle-text" class="profile-handle">@aura</span>
+                </div>
+
+                <!-- Badges -->
+                <div id="badges-container" class="badges-container">
+                    <!-- Dynamic Badges rendered via app.js -->
+                </div>
+
+                <!-- Bio Description -->
+                <p id="profile-bio-text" class="profile-bio">
+                    Fullstack Cyber Samurai // Building high-frequency digital experiences.
+                </p>
+            </header>
+
+            <!-- Social Links Grid -->
+            <section id="socials-grid" class="socials-grid">
+                <!-- Dynamic Social Buttons rendered via app.js -->
+            </section>
+
+            <!-- Audio Player Bar -->
+            <section id="audio-player-card" class="audio-player-card">
+                <div class="audio-header">
+                    <div class="audio-info">
+                        <div class="audio-disc-icon">🎵</div>
+                        <div class="audio-details">
+                            <span id="audio-title-text" class="audio-title">Midnight Cyber Synth</span>
+                            <span id="audio-artist-text" class="audio-artist">Synthwave Audio Engine</span>
+                        </div>
+                    </div>
+
+                    <div class="audio-controls">
+                        <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.05" value="0.5" title="Volume Slider">
+                        <button id="audio-mute-btn" class="audio-btn" title="Toggle Mute">🔊</button>
+                        <button id="audio-play-btn" class="audio-btn" title="Play/Pause Audio">
+                            <span id="play-btn-icon">▶</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Live Canvas Audio Visualizer -->
+                <canvas id="visualizer-canvas" width="400" height="28"></canvas>
+            </section>
+
+            <!-- Discord Rich Presence Activity Widget -->
+            <section id="discord-widget" class="discord-widget">
+                <div class="discord-avatar-wrap">
+                    <img id="discord-avatar" class="discord-avatar" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=150&auto=format&fit=crop&q=80" alt="Discord Avatar">
+                </div>
+                <div class="discord-info">
+                    <span id="discord-user" class="discord-user">aura_dev <span class="status-dot dnd"></span></span>
+                    <span id="discord-status-text" class="discord-status-text">⚡ Coding in the dark</span>
+                    <span id="discord-game-detail" class="discord-game-detail">Cyberpunk 2077 — In Night City // Act III</span>
+                </div>
+            </section>
+
+            <!-- Card Footer Stats -->
+            <footer class="card-footer">
+                <div class="stats-group">
+                    <div class="stat-item" title="Total Profile Views">
+                        <span>👁️</span> <span id="view-count-text">14,289</span>
+                    </div>
+                </div>
+
+                <button id="like-btn" class="like-btn">
+                    <span>❤️</span> <span id="like-count-text">892</span>
+                </button>
+            </footer>
+
+        </article>
+
+        <!-- Floating Controls Bar -->
+        <nav class="floating-actions">
+            <button id="open-studio-btn" class="action-btn">
+                <span>⚙️</span> Customize Profile
+            </button>
+            <button id="share-link-btn" class="action-btn">
+                <span>🔗</span> Share Link
+            </button>
+        </nav>
+    </main>
+
+    <!-- Customization Studio Modal / Drawer -->
+    <div id="studio-modal-backdrop" class="modal-backdrop">
+        <div class="studio-modal">
+            
+            <header class="studio-header">
+                <h2 class="studio-title">⚙️ Profile Customization Studio</h2>
+                <button id="close-studio-btn" class="close-btn" title="Close Modal">✕</button>
+            </header>
+
+            <nav class="studio-nav">
+                <button class="tab-btn active" data-tab="identity">Identity & Bio</button>
+                <button class="tab-btn" data-tab="audio">Audio & Track</button>
+                <button class="tab-btn" data-tab="theme">Theme & Effects</button>
+                <button class="tab-btn" data-tab="presets">Presets & Themes</button>
+            </nav>
+
+            <div class="studio-body">
+                
+                <!-- Tab 1: Identity & Bio -->
+                <div id="tab-identity" class="tab-pane active">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="input-display-name">Display Name</label>
+                            <input type="text" id="input-display-name" class="form-input" placeholder="e.g. AURA ⚡">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="input-handle">Username Handle</label>
+                            <input type="text" id="input-handle" class="form-input" placeholder="e.g. aura">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="input-avatar-url">Avatar Image URL</label>
+                        <input type="text" id="input-avatar-url" class="form-input" placeholder="https://...">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="input-bio">Bio Description</label>
+                        <textarea id="input-bio" class="form-textarea" rows="3" placeholder="Tell the world about yourself..."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="checkbox-group">
+                            <input type="checkbox" id="input-typewriter">
+                            <span>Enable Typewriter Bio Effect</span>
+                        </label>
+                        <label class="checkbox-group">
+                            <input type="checkbox" id="input-verified">
+                            <span>Verified Checkmark Badge</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Audio & Sound -->
+                <div id="tab-audio" class="tab-pane">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="input-audio-title">Track Title</label>
+                            <input type="text" id="input-audio-title" class="form-input" placeholder="Song Title">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="input-audio-artist">Artist Name</label>
+                            <input type="text" id="input-audio-artist" class="form-input" placeholder="Artist Name">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="input-audio-track">Built-in Synth Track</label>
+                            <select id="input-audio-track" class="form-select">
+                                <option value="synthwave">Midnight Synthwave (Cyberpunk)</option>
+                                <option value="ambient">Dark Ambient Chords (OLED)</option>
+                                <option value="matrix">Terminal Matrix Pulse (Hacker)</option>
+                                <option value="electro">Adrenaline Electro (Crimson)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="input-visualizer-style">Audio Visualizer Mode</label>
+                            <select id="input-visualizer-style" class="form-select">
+                                <option value="bars">Dynamic Spectrum Bars</option>
+                                <option value="spectrum">Full Gradient Spectrum</option>
+                                <option value="wave">Oscilloscope Waveform</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="input-audio-custom-url">Custom Audio Stream URL (MP3 / Direct Audio Link)</label>
+                        <input type="text" id="input-audio-custom-url" class="form-input" placeholder="https://example.com/track.mp3 (Optional)">
+                    </div>
+                </div>
+
+                <!-- Tab 3: Theme & Effects -->
+                <div id="tab-theme" class="tab-pane">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="input-primary-glow">Primary Glow Color</label>
+                            <input type="color" id="input-primary-glow" class="form-input" value="#a855f7">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="input-secondary-glow">Secondary Glow Color</label>
+                            <input type="color" id="input-secondary-glow" class="form-input" value="#00f0ff">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="input-bg-type">Background Canvas Mode</label>
+                            <select id="input-bg-type" class="form-select">
+                                <option value="starfield">Twinkling Starfield & Dust</option>
+                                <option value="matrix">Cyber Matrix Code Rain</option>
+                                <option value="embers">Rising Fire Embers</option>
+                                <option value="liquid">Flowing Liquid Mesh</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="input-font-family">Font Family</label>
+                            <select id="input-font-family" class="form-select">
+                                <option value="'Space Grotesk', sans-serif">Space Grotesk (Futuristic)</option>
+                                <option value="'Inter', sans-serif">Inter (Sleek Modern)</option>
+                                <option value="'Outfit', sans-serif">Outfit (Clean Pro)</option>
+                                <option value="'Fira Code', monospace">Fira Code (Hacker Monospace)</option>
+                                <option value="'Press Start 2P', monospace">Press Start 2P (Retro 8-Bit)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="input-card-bg">Bio Card Background Glass Tint</label>
+                        <input type="text" id="input-card-bg" class="form-input" placeholder="rgba(15, 10, 25, 0.65)">
+                    </div>
+
+                    <div class="form-row">
+                        <label class="checkbox-group">
+                            <input type="checkbox" id="input-scanlines">
+                            <span>Enable Retro CRT Scanlines</span>
+                        </label>
+                        <label class="checkbox-group">
+                            <input type="checkbox" id="input-card-tilt" checked>
+                            <span>Enable 3D Card Tilt</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Tab 4: Presets -->
+                <div id="tab-presets" class="tab-pane">
+                    <p style="font-size: 0.85rem; color: var(--subtext-color);">Click any preset to instantly apply curated Guns.lol / Feds.lol themes:</p>
+                    <div class="presets-grid">
+                        <div class="preset-card" data-preset="cyberpunk">
+                            <span style="font-size: 1.8rem;">⚡</span>
+                            <span class="preset-title">Cyberpunk Neon</span>
+                            <span style="font-size: 0.75rem; color: var(--subtext-color);">Purple & Cyan Glow</span>
+                        </div>
+                        <div class="preset-card" data-preset="midnight">
+                            <span style="font-size: 1.8rem;">✦</span>
+                            <span class="preset-title">Midnight OLED</span>
+                            <span style="font-size: 0.75rem; color: var(--subtext-color);">Obsidian Minimalist</span>
+                        </div>
+                        <div class="preset-card" data-preset="hacker">
+                            <span style="font-size: 1.8rem;">👾</span>
+                            <span class="preset-title">Toxic Matrix</span>
+                            <span style="font-size: 0.75rem; color: var(--subtext-color);">Green Code Rain</span>
+                        </div>
+                        <div class="preset-card" data-preset="crimson">
+                            <span style="font-size: 1.8rem;">🩸</span>
+                            <span class="preset-title">Blood Crimson</span>
+                            <span style="font-size: 0.75rem; color: var(--subtext-color);">Red Ember Fire</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <footer class="studio-footer">
+                <span style="font-size: 0.8rem; color: var(--subtext-color);">Changes save automatically in browser storage.</span>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="presets.js"></script>
+    <script src="audio.js"></script>
+    <script src="canvas.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
